@@ -1,13 +1,8 @@
 <p align="center">
-<img alt="logo" src="https://github.com/huanghanzhilian/huanghanzhilian/raw/main/projects/c-shopping-rn.svg" width="300">
+<img alt="logo" src="https://github.com/supercoderl/Libra-Restaurant-Frontend/blob/main/public/assets/images/logo/logo-removebg-preview.png?raw=true" width="300">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">C-Shopping-RN APP</h1>
-<h4 align="center">This is a complete App developed by React Native (Expo). It is a beautiful e-commerce shopping application</h4>
-
-## README.md
-
-- en [English](README.md)
-- zh_CN [Simplified Chinese](README.zh_CN.md)
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Libra Restaurant</h1>
+<h4 align="center">Discover the ultimate dining convenience with our restaurant's mobile app! Designed to bring our services right to your fingertips, the app provides a seamless way to explore menus, check availability, and manage your reservations.</h4>
 
 ## Technologies Used
 
@@ -16,16 +11,6 @@
 - RTK Query
 - Expo Router
 - NativeWind
-
-## Preface
-
-`c-shopping-rn` is an exquisite e-commerce App with an elegant interface, rich functions, small size and speed. It contains the complete functions of an e-commerce platform MVP and has good aesthetic style and coding design.
-
-The project data interface comes from [c-shopping](https://github.com/huanghanzhilian/c-shopping) Next.js open source project
-
-Project portal: [https://github.com/huanghanzhilian/c-shopping](https://github.com/huanghanzhilian/c-shopping)
-
-I hope those who come will gain something. The story never ends, and youth never ends.
 
 ## Feature Demo
 
@@ -87,18 +72,18 @@ I hope those who come will gain something. The story never ends, and youth never
 
 ## Usage
 
-To run the C-Shopping React Native app locally, follow these steps:
+To run the Libra Restaurant React Native app locally, follow these steps:
 
 1. Clone the repository:
 
    ```
-   git clone https://github.com/huanghanzhilian/c-shopping-rn.git
+   git clone https://github.com/supercoderl/Libra-Restaurant-Mobile.git
    ```
 
 2. Navigate to the project directory:
 
    ```
-   cd c-shopping-rn
+   cd LibraRestaurantMobile
    ```
 
 3. Install dependencies:
@@ -112,7 +97,13 @@ To run the C-Shopping React Native app locally, follow these steps:
    Eg:
 
    ```
-   EXPO_PUBLIC_BASE_URL=https://c-shopping-three.vercel.app
+      EXPO_PUBLIC_API_URL=""
+      EXPO_PUBLIC_BASE_URL=""
+      EXPO_PUBLIC_DUMMY_PICTURE=""
+      EXPO_PUBLIC_DUMMY_USER_PICTURE=""
+      EXPO_PUBLIC_CLOUDINARY_URL=""
+      EXPO_PUBLIC_REALTIME_URL=""
+      EXPO_PUBLIC_GOOGLE_CLIENT_ID=""
    ```
 
 5. Start the development server:
@@ -125,29 +116,19 @@ To run the C-Shopping React Native app locally, follow these steps:
 
 ## Contact Me
 
-I am a technology explorer, a eager learner, and a problem solver.
-<br/>
-我是一个技术的探索者，一个渴望学习的人，一个解决问题的人。
+- Email: [minh.quang1720@gmail.com](mailto:minh.quang1720@gmail.com)
+- Github: [Github](https://github.com/supercoderl)
+- Porfolio: [Porfolio](https://porfolio-1706.vercel.app/home)
+- Socials:
+  - Facebook: [facebook](https://www.facebook.com/quangm4)
+  - LinkedIn：[LinkedIn](https://www.linkedin.com/in/supercoderle)
 
-- Email: [h1319639755@gmail.com](mailto:h1319639755@gmail.com)
-- Twitter: [继小鹏](https://twitter.com/Huanghanzhilian)
-- Github: [Github](https://github.com/huanghanzhilian)
-- Blog: [继小鹏](https://blog.huanghanlian.com/)
-- 我的中文渠道:
-  - 微博：[继小鹏1](https://weibo.com/u/5653497957)
-  - 微信公众号：「继小鹏的博客」
-  - 掘金：[继小鹏](https://juejin.cn/user/2119514150414686)
-  - 知乎：[继小鹏](https://www.zhihu.com/people/huang-han-zhi-lian)
-  - 即刻：[继小鹏](https://web.okjike.com/u/BA3424F7-4D6E-4A2C-BA7E-138B616EED05)
-  - bilibili：[继小鹏](https://space.bilibili.com/191128853)
+### Zalo
 
-### WeChat Official Account | My WeChat
+Follow my zalo if you wanna contact to me!
 
-Follow our WeChat Official Account for more information. Feel free to provide any feedback or suggestions by opening an issue or leaving a message on the Official Account. You're also welcome to add me on WeChat for further communication.
-
-| My WeChat Official Account                                                                                                                             | My WeChat                                                                                                                         |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
-| <img alt="Ji Xiao Peng Official Account" src="https://www.cheerspublishing.com/uploads/article/4632461d-0d43-4378-bcf7-bb32bf0de950.jpeg" width="150"> | <img alt="My WeChat" src="https://www.cheerspublishing.com/uploads/article/6f041fb6-2141-49d8-b20b-6e989687bf9a.png" width="150"> |
+| Zalo | ------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| <img alt="zalo-qr" src="https://res.cloudinary.com/dcystvroz/image/upload/v1731939941/My%20pics/eyasdc4eum5zz1mri47t.jpg" width="150"> |
 
 ## Contributing
 
