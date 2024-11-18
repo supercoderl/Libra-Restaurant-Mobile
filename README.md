@@ -120,14 +120,14 @@ To run the Libra Restaurant React Native app locally, follow these steps:
 - Github: [Github](https://github.com/supercoderl)
 - Porfolio: [Porfolio](https://porfolio-1706.vercel.app/home)
 - Socials:
-  - Facebook: [facebook](https://www.facebook.com/quangm4)
+  - Facebook: [Facebook](https://www.facebook.com/quangm4)
   - LinkedIn：[LinkedIn](https://www.linkedin.com/in/supercoderle)
 
 ### Zalo
 
 Follow my zalo if you wanna contact to me!
 
-| Zalo | ------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| Zalo | |------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
 | <img alt="zalo-qr" src="https://res.cloudinary.com/dcystvroz/image/upload/v1731939941/My%20pics/eyasdc4eum5zz1mri47t.jpg" width="150"> |
 
 ## Contributing
