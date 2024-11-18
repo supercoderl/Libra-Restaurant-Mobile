@@ -4,15 +4,15 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getCategories: builder.query({
       query: () => ({
-        url: '/api/category',
+        url: 'Category?includeDeleted=false',
         method: 'GET',
       }),
       providesTags: (result, error, arg) =>
         result
           ? [
-              ...result?.data?.categories.map(({ _id }) => ({
+              ...result?.data?.items.map((_, index) => ({
                 type: 'Category',
-                id: _id,
+                id: index,
               })),
               'Category',
             ]
@@ -20,16 +20,16 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
     }),
 
     getSingleCategory: builder.query({
-      query: ({ id }) => ({
-        url: `/api/category/${id}`,
+      query: ({ categoryId }) => ({
+        url: `Category/${categoryId}`,
         method: 'GET',
       }),
-      providesTags: (result, error, arg) => [{ type: 'Category', id: arg.id }],
+      providesTags: (result, error, arg) => [{ type: 'Category', id: arg.categoryId }],
     }),
 
     updateCategory: builder.mutation({
       query: ({ id, body }) => ({
-        url: `/api/category/${id}`,
+        url: `/api/v1/Category`,
         method: 'PUT',
         body,
       }),
@@ -38,7 +38,7 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
 
     createCategory: builder.mutation({
       query: ({ body }) => ({
-        url: '/api/category',
+        url: '/api/v1/Category',
         method: 'POST',
         body,
       }),

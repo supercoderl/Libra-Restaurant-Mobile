@@ -1,14 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
+import loadingDelayMiddleware from 'middlewares/loading'
 import { persistReducer } from 'redux-persist'
 
 //? Reducers
-import cartReducer from './slices/cart.slice'
-import filtersReducer from './slices/filters.slice'
-import userReducer from './slices/user.slice'
+import { thunk } from 'redux-thunk'
+import apiSlice from 'services/api'
 
-import apiSlice from '@/services/api'
+import cartReducer from './slices/cart.slice'
+import discountTypeReducer from './slices/discountType.slice'
+import filtersReducer from './slices/filters.slice'
+import itemReducer from './slices/item.slice'
+import reservationReducer from './slices/reservation.slice'
+import userReducer from './slices/user.slice'
 
 const persistConfig = {
   key: 'root',
@@ -18,6 +23,9 @@ const persistConfig = {
 
 const cartPersistedReducer = persistReducer(persistConfig, cartReducer)
 const userPersistedReducer = persistReducer(persistConfig, userReducer)
+const reservationPersistedReducer = persistReducer(persistConfig, reservationReducer)
+const discountTypePersisterdReducer = persistReducer(persistConfig, discountTypeReducer)
+const itemPersistedReducer = persistReducer(persistConfig, itemReducer)
 
 //? Actions
 export * from './slices/user.slice'
@@ -29,12 +37,23 @@ export const store = configureStore({
     user: userPersistedReducer,
     cart: cartPersistedReducer,
     filters: filtersReducer,
+    reservation: reservationPersistedReducer,
+    discountType: discountTypePersisterdReducer,
+    item: itemPersistedReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
+      immutableCheck: false,
       serializableCheck: false,
-    }).concat(apiSlice.middleware),
+    })
+      .concat(thunk)
+      .concat(apiSlice.middleware)
+      .concat(loadingDelayMiddleware),
 })
 
 setupListeners(store.dispatch)
+
+store.dispatch(
+  apiSlice.endpoints.getItems.initiate({ categoryId: -1, includeDeleted: false, pageSize: 100 })
+)

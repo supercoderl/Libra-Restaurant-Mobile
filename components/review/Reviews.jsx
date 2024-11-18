@@ -9,6 +9,7 @@ import ReveiwSkeleton from '../skeleton/ReveiwSkeleton'
 
 import { useUserInfo } from '@/hooks'
 import { useGetProductReviewsQuery } from '@/services'
+import { useTranslation } from 'react-i18next'
 
 const Reviews = props => {
   //? Props
@@ -16,6 +17,7 @@ const Reviews = props => {
 
   //? Assets
   const { mustAuthAction } = useUserInfo()
+  const { t } = useTranslation()
 
   //? Get Product-Reviews Query
   const { data, isSuccess, isFetching, error, isError, refetch } = useGetProductReviewsQuery(
@@ -28,9 +30,7 @@ const Reviews = props => {
 
   //? Handlers
   const handleOpenComment = () => {
-    mustAuthAction(() => {
-      router.push({ pathname: `/review/comment`, params: { prdouctID, productTitle, numReviews } })
-    })
+    router.push({ pathname: `/review/comment`, params: { prdouctID, productTitle, numReviews } });
   }
 
   //? Render(s)
@@ -38,8 +38,8 @@ const Reviews = props => {
     <>
       <View className="px-3 py-3 space-y-4" id="_productReviews">
         <View className="flex flex-row items-center justify-between">
-          <Text className="">商品评价</Text>
-          <Text className="text-xs text-sky-500">{numReviews} 条评价</Text>
+          <Text className="">{t('food-review')}</Text>
+          <Text className="text-xs text-sky-500">{numReviews} {t('reviews')}</Text>
         </View>
         <View className="mb-2">
           <Pressable
@@ -47,10 +47,10 @@ const Reviews = props => {
             className="flex flex-row justify-between items-center w-full"
           >
             <Icons.EvilIcons name="comment" size={24} className="icon" />
-            <Text className="text-sm text-black ml-2">写下您对该商品的评价</Text>
+            <Text className="text-sm text-black ml-2">{t('write-comment')}</Text>
             <Icons.MaterialIcons name="keyboard-arrow-right" size={24} className="ml-auto icon" />
           </Pressable>
-          <Text className="mt-6 text-xs text-gray-500">提交确认后，通过将赠送积分。</Text>
+          <Text className="mt-6 text-xs text-gray-500">{t('cus-feel')}</Text>
         </View>
         <ShowWrapper
           error={error}

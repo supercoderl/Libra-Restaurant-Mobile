@@ -8,12 +8,14 @@ import Modal from './common/Modal'
 
 import { useDisclosure } from '@/hooks'
 import { sorts } from '@/utils'
+import { useTranslation } from 'react-i18next'
 
 const Sort = ({ handleChangeRoute }) => {
   //? Assets
   const [isSort, sortHandlers] = useDisclosure()
   const params = useLocalSearchParams()
   const insets = useSafeAreaInsets()
+  const { t } = useTranslation()
 
   //? State
   const [sort, setSort] = useState(sorts[0])
@@ -57,7 +59,7 @@ const Sort = ({ handleChangeRoute }) => {
             style={{ paddingTop: insets.top }}
             className="flex flex-col h-[100vh] w-[80vw] px-5 ml-[15vw] bg-white"
           >
-            <Modal.Header onClose={sortHandlers.close}>排序</Modal.Header>
+            <Modal.Header onClose={sortHandlers.close}>{t('close')}</Modal.Header>
             <Modal.Body>
               <View className="divide-y divide-neutral-300">
                 {sorts.map((item, i) => (

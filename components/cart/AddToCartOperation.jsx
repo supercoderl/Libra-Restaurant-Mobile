@@ -1,62 +1,33 @@
 import { useState, useEffect } from 'react'
 import { View } from 'react-native'
-import Toast from 'react-native-toast-message'
 
 import CartButtons from './CartButtons'
 import { Button } from '../common/Buttons'
 import ProductPrice from '../product/ProductPrice'
 
-import { useAppDispatch, useAppSelector, useUserInfo } from '@/hooks'
-import { addToCart } from '@/store'
-import { exsitItem } from '@/utils'
+import { useUserInfo } from '@/hooks'
+import { useTranslation } from 'react-i18next'
 
 const AddToCartOperation = props => {
-  //? Props
-  const { product } = props
-
   //? Assets
-  const dispatch = useAppDispatch()
+  const { t } = useTranslation();
 
-  //? Store
-  const { cartItems, tempColor, tempSize } = useAppSelector(state => state.cart)
-
-  //? State
-  const [currentItemInCart, setCurrentItemInCart] = useState(undefined)
+  //? Props
+  const { product, handleAddItem } = props
 
   //? Get User Data
   const { userInfo, mustAuthAction } = useUserInfo()
 
+  //? States
+  const [currentItemInCart, setCurrentItemInCart] = useState(undefined)
+
   //? Re-Renders
   useEffect(() => {
-    const item = exsitItem(cartItems, product._id, tempColor, tempSize)
-    setCurrentItemInCart(item)
-  }, [tempColor, tempSize, cartItems])
+    // const item = exsitItem(cartItems, product._id, tempColor, tempSize)
+    // setCurrentItemInCart(item)
+  }, [])
 
-  //? handlers
-  const handleAddItem = () => {
-    mustAuthAction(() => {
-      if (product.inStock === 0)
-        return Toast.show({
-          type: 'error',
-          text2: '此商品缺货',
-        })
 
-      dispatch(
-        addToCart({
-          productID: product._id,
-          name: product.title,
-          price: product.price,
-          discount: product.discount,
-          inStock: product.inStock,
-          sold: product.sold,
-          color: tempColor,
-          size: tempSize,
-          img: product.images[0],
-          quantity: 1,
-        })
-      )
-    })
-  }
 
   //? Render(s)
   return (
@@ -69,15 +40,15 @@ const AddToCartOperation = props => {
         </View>
       ) : (
         <Button onPress={handleAddItem} className="px-12 text-sm btn">
-          添加到购物车
+          {t('add-to-cart')}
         </Button>
       )}
 
       <View className="min-w-fit">
         <ProductPrice
-          inStock={product.inStock}
-          discount={product.discount}
-          price={product.price}
+          inStock={product?.quantity}
+          discount={product?.discount || 0}
+          price={product?.price}
           singleProduct
         />
       </View>

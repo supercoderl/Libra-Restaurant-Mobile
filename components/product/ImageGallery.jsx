@@ -9,14 +9,14 @@ const ImageGallery = props => {
 
   //? Render(s)
   return (
-    <View className="mb-5">
-      <Swiper className="h-[100vw]" showsPagination activeDotColor="#1D4ED8" dotColor="#E5E7EB">
+    <View className="mb-2">
+      <Swiper className="h-[60vw]" showsPagination activeDotColor="#1D4ED8" dotColor="#E5E7EB">
         {images.map((image, index) => (
           <ResponsiveImage
             key={index}
-            className="h-[100vw] w-full"
-            imageStyles="h-[100vw] w-full"
-            source={image.url}
+            className="h-[60vw] w-full"
+            imageStyles="h-[60vw] w-full"
+            source={image}
             alt={productName}
           />
         ))}

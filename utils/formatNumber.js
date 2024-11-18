@@ -4,5 +4,5 @@ export default function formatNumber(n) {
 
     return newNumber.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   }
-  return ''
+  return '0'
 }

@@ -1,4 +1,5 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit'
+import Toast from 'react-native-toast-message'
 
 import { exsitItem, getTotal } from '@/utils'
 
@@ -6,9 +7,8 @@ const initialState = {
   cartItems: [],
   totalItems: 0,
   totalPrice: 0,
-  totalDiscount: 0,
-  tempSize: null,
-  tempColor: null,
+  orderId: null,
+  order: null,
 }
 
 const cartSlice = createSlice({
@@ -16,64 +16,82 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const { color, size, productID } = action.payload
+      const { itemId } = action.payload
 
-      const isItemExist = exsitItem(state.cartItems, productID, color, size)
+      const isItemExist = exsitItem(state.cartItems, itemId)
 
       if (isItemExist) {
-        isItemExist.quantity += 1
+        isItemExist.quantityInCart += 1
         state.totalItems = getTotal(state.cartItems, 'quantity')
         state.totalPrice = getTotal(state.cartItems, 'price')
-        state.totalDiscount = getTotal(state.cartItems, 'discount')
       } else {
-        state.cartItems.push({ itemID: nanoid(), ...action.payload })
+        state.cartItems.push(action.payload)
         state.totalItems = getTotal(state.cartItems, 'quantity')
         state.totalPrice = getTotal(state.cartItems, 'price')
-        state.totalDiscount = getTotal(state.cartItems, 'discount')
       }
     },
 
     removeFromCart: (state, action) => {
-      const index = state.cartItems.findIndex(item => item.itemID === action.payload)
+      const index = state.cartItems.findIndex(item => item.itemId === action.payload)
 
       if (index !== -1) {
         state.cartItems.splice(index, 1)
         state.totalItems = getTotal(state.cartItems, 'quantity')
         state.totalPrice = getTotal(state.cartItems, 'price')
-        state.totalDiscount = getTotal(state.cartItems, 'discount')
       }
     },
 
     increase: (state, action) => {
-      state.cartItems.forEach(item => {
-        if (item.itemID === action.payload) item.quantity += 1
+      state.cartItems.forEach(cart => {
+        if (cart.itemId === action.payload) {
+          if (cart.quantityInCart < 99) {
+            cart.quantityInCart += 1
+          }
+        }
       })
       state.totalItems = getTotal(state.cartItems, 'quantity')
       state.totalPrice = getTotal(state.cartItems, 'price')
-      state.totalDiscount = getTotal(state.cartItems, 'discount')
     },
 
     decrease: (state, action) => {
-      state.cartItems.forEach(item => {
-        if (item.itemID === action.payload) item.quantity -= 1
+      state.cartItems.forEach(cart => {
+        if (cart.itemId === action.payload) {
+          if (cart.quantityInCart > 1) {
+            cart.quantityInCart -= 1
+          }
+        }
       })
       state.totalItems = getTotal(state.cartItems, 'quantity')
       state.totalPrice = getTotal(state.cartItems, 'price')
-      state.totalDiscount = getTotal(state.cartItems, 'discount')
     },
 
     clearCart: state => {
       state.cartItems = []
       state.totalItems = 0
       state.totalPrice = 0
-      state.totalDiscount = 0
-    },
-    setTempColor: (state, action) => {
-      state.tempColor = action.payload
+      state.order = null
     },
 
-    setTempSize: (state, action) => {
-      state.tempSize = action.payload
+    removeOrderId: state => {
+      state.orderId = null
+      state.order = null
+    },
+
+    updateItemsInCart: (state, action) => {
+      state.cartItems = action.payload
+    },
+
+    updateTotalItem: (state, action) => {
+      state.totalItems = action.payload.totalItems
+      state.totalPrice = action.payload.totalPrice
+    },
+
+    updateOrderId: (state, action) => {
+      state.orderId = action.payload
+    },
+
+    updateOrder: (state, action) => {
+      state.order = action.payload
     },
   },
 })
@@ -84,8 +102,11 @@ export const {
   clearCart,
   decrease,
   increase,
-  setTempColor,
-  setTempSize,
+  updateItemsInCart,
+  updateTotalItem,
+  updateOrderId,
+  removeOrderId,
+  updateOrder,
 } = cartSlice.actions
 
 export default cartSlice.reducer

@@ -1,25 +1,25 @@
 export const sorts = [
   {
-    name: '最新的',
+    name: 'Món mới',
     value: 1,
   },
   {
-    name: '最畅销',
+    name: 'Bán chạy',
     value: 2,
   },
   {
-    name: '最便宜的',
+    name: 'Giá rẻ',
     value: 3,
   },
-  {
-    name: '最重磅的',
-    value: 4,
-  },
+  // {
+  //   name: '最重磅的',
+  //   value: 4,
+  // },
 ]
 
-export const ratingStatus = ['', '最糟糕的', '糟糕的', '一般', '很好', '非常好']
+export const ratingStatus = ['', 'Tệ', 'Tạm được', 'Bình thường', 'Ngon', 'Rất ngon']
 
-export const siteTitle = '精选好物'
-export const enSiteTitle = 'C-Shopping'
+export const siteTitle = 'Lựa chọn'
+export const enSiteTitle = 'Libra'
 
-export const siteDescription = `从${siteTitle}以最优惠的价格购买您需要的一切！ 最新款手机、笔记本电脑、衣服、化妆品、书籍、家电、汽车等，轻松换货 | ✓免费送货 ✓当场付款 ✓退货保证 - 点击购买！`
+export const siteDescription = `Nhà hàng ${siteTitle} luôn tận tâm mang đến cho khách hàng những món ngon hảo hạng, sử dụng những gia vị nguyên chất và độc đáo, khách hàng sẽ được cảm nhận những hương vị khác lạ và độc đáo.`

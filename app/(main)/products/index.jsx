@@ -5,42 +5,33 @@ import { View, Text } from 'react-native'
 import { Filter, ProductCard, ProductSkeleton, Sort, SubCategories } from '@/components'
 import { useChangeRoute } from '@/hooks'
 import { useGetCategoriesQuery, useGetProductsQuery } from '@/services'
+import ProductCardV2 from 'components/product/ProductCardV2'
+import { EmptyCustomList } from 'components'
+import { useTranslation } from 'react-i18next'
 
 export default function ProductsScreen() {
   //? Assets
   const params = useLocalSearchParams()
+  const { t } = useTranslation();
 
-  const category = params?.category?.toString() ?? ''
-  const page_size = params?.page_size?.toString() ?? 10
+  const categoryId = params?.categoryId ?? -1
+  const title = params?.title ?? ''
   const page = params?.page?.toString() ?? 1
-  const sort = params?.sort?.toString() ?? ''
-  const search = params?.search?.toString() ?? ''
-  const inStock = params?.inStock?.toString() ?? ''
-  const discount = params?.discount?.toString() ?? ''
-  const price = params?.price?.toString() ?? ''
 
   //? Querirs
   //*    Get Products Data
 
   const {
-    data,
+    products,
     hasNextPage,
     isFetching: isFetchingProduct,
   } = useGetProductsQuery(
     {
-      category,
-      page_size,
-      page,
-      sort,
-      search,
-      inStock,
-      discount,
-      price,
+      categoryId,
     },
     {
       selectFromResult: ({ data, ...args }) => ({
-        hasNextPage: data?.data?.pagination?.hasNextPage ?? false,
-        data,
+        products: data?.data?.items ?? [],
         ...args,
       }),
     }
@@ -71,10 +62,8 @@ export default function ProductsScreen() {
     currentCategory,
   } = useGetCategoriesQuery(undefined, {
     selectFromResult: ({ isLoading, data }) => {
-      const currentCategory = data?.data?.categories.find(cat => cat.slug === category)
-      const childCategories = data?.data?.categories.filter(
-        cat => cat.parent === currentCategory?._id
-      )
+      const currentCategory = []
+      const childCategories = []
       return { childCategories, isLoading, currentCategory }
     },
   })
@@ -83,7 +72,7 @@ export default function ProductsScreen() {
     <>
       <Stack.Screen
         options={{
-          title: params.category,
+          title: title,
         }}
       />
       <View className="bg-white h-full flex">
@@ -92,39 +81,40 @@ export default function ProductsScreen() {
           name={currentCategory?.name}
           isLoading={isLoadingCategories}
         />
-        <View className="px-1 flex-1">
-          <View id="_products" className="w-full h-[100%] flex px-4 py-2 mt-2">
+        <View className="px-1 pb-3 flex-1">
+          <View id="_products" className="w-full h-[100%] flex  mt-2">
             {/* Filters & Sort */}
             <View className="divide-y-2 divide-neutral-200">
-              <View className="flex flex-row py-2 gap-x-3">
+              <View className="flex flex-row py-2 gap-x-1">
                 <Filter
-                  mainMaxPrice={data?.data?.mainMaxPrice}
-                  mainMinPrice={data?.data?.mainMinPrice}
+                  mainMaxPrice={0}
+                  mainMinPrice={0}
                   handleChangeRoute={handleChangeRoute}
                 />
                 <Sort handleChangeRoute={handleChangeRoute} />
               </View>
 
-              <View className="flex flex-row justify-between py-2">
-                <Text className="text-base text-neutral-600">所有商品</Text>
+              <View className="flex flex-row justify-between p-2">
+                <Text className="text-base text-neutral-600">{t('all')}</Text>
 
                 <Text className="text-base text-neutral-600">
-                  {data?.data?.productsLength} 件商品
+                  {products?.length ?? 0} {t('${quantity}-dishes', { quantity: totalItems })}
                 </Text>
               </View>
             </View>
             {/* Products */}
-            {isFetchingProduct && page === 1 && <ProductSkeleton />}
-            {data && data?.data?.products.length > 0 ? (
+            {isFetchingProduct && <ProductSkeleton />}
+            {products && products.length > 0 ? (
               <FlashList
-                data={data?.data?.products}
-                renderItem={({ item, index }) => <ProductCard product={item} key={item._id} />}
+                data={products}
+                renderItem={({ item, index }) => <ProductCardV2 product={item} key={item.itemId} />}
                 onEndReached={onEndReachedThreshold}
                 onEndReachedThreshold={0}
                 estimatedItemSize={200}
+                showsVerticalScrollIndicator={false}
               />
             ) : (
-              <Text className="text-center text-red-500">没有找到商品</Text>
+              <EmptyCustomList />
             )}
           </View>
         </View>

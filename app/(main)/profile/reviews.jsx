@@ -5,10 +5,12 @@ import { ScrollView, View } from 'react-native'
 
 import { ReveiwCard, ShowWrapper, EmptyCommentsList, ReveiwSkeleton } from '@/components'
 import { useGetReviewsQuery } from '@/services'
+import { useTranslation } from 'react-i18next'
 
 const ReviewsScreen = () => {
   //? Assets
   const [page, setPage] = useState(1)
+  const { t } = useTranslation();
 
   //*   Get Reviews
   const { data, hasNextPage, isSuccess, isFetching, error, isError, refetch, originalArgs } =
@@ -39,7 +41,7 @@ const ReviewsScreen = () => {
     <>
       <Stack.Screen
         options={{
-          title: '我的评论',
+          title: t('my-comment'),
           headerBackTitleVisible: false,
         }}
       />

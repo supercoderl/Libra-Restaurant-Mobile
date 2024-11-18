@@ -1,8 +1,7 @@
 import { Stack } from 'expo-router'
-import { ScrollView } from 'react-native'
+import { RefreshControl, ScrollView } from 'react-native'
 
 import {
-  BannerOne,
   BannerTwo,
   BestSellsSlider,
   Categories,
@@ -12,25 +11,20 @@ import {
   FeedHeader,
   ShowWrapper,
 } from '@/components'
-import { useGetFeedInfoQuery } from '@/services'
+import { banners } from '@/models/banner'
+import { events } from 'models/event'
+import { useGetFeedInfoQuery } from 'services'
 
 export default function FeedScreen() {
   //? Assets
 
   //? Get Feeds Query
-  const {
-    data: { childCategories, currentCategory, sliders, bannerOneType, bannerTwoType },
-    isLoading,
-    isSuccess,
-    isFetching,
-    error,
-    isError,
-    refetch,
-  } = useGetFeedInfoQuery(
+  const { categories, menuItems, isFetching, refetch } = useGetFeedInfoQuery(
     {},
     {
       selectFromResult: ({ data, ...args }) => ({
-        data: data?.data || {},
+        categories: data?.data?.categories?.items || [],
+        menuItems: data?.data?.menuItems?.items || [],
         ...args,
       }),
     }
@@ -45,27 +39,24 @@ export default function FeedScreen() {
         }}
       />
       <ShowWrapper
-        error={error}
-        isError={isError}
-        refetch={refetch}
-        isFetching={isFetching}
-        isSuccess={isSuccess}
+        error={null}
+        isError={false}
+        refetch={() => {}}
+        isFetching={false}
+        isSuccess={true}
         type="detail"
       >
-        <ScrollView className="bg-white flex h-full px-3">
+        <ScrollView
+          className="bg-white flex h-full px-3"
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+        >
           <>
-            <MainSlider data={sliders} />
-            <Categories
-              childCategories={{ categories: childCategories, title: '所有分类' }}
-              color={currentCategory?.colors?.start}
-              name={currentCategory?.name}
-              homePage
-            />
-            <DiscountSlider currentCategory={currentCategory} />
-            <BannerOne data={bannerOneType} />
-            <BestSellsSlider categorySlug={currentCategory?.slug} />
-            <BannerTwo data={bannerTwoType} />
-            <MostFavouraiteProducts categorySlug={currentCategory?.slug} />
+            <MainSlider data={banners} />
+            <Categories categories={categories} homePage />
+            <DiscountSlider products={menuItems.slice(0, 5)} isLoading={isFetching} />
+            <BestSellsSlider products={menuItems.slice(5, 10)} isLoading={isFetching} />
+            <BannerTwo data={events} />
+            <MostFavouraiteProducts products={menuItems.slice(10)} isLoading={isFetching} />
           </>
         </ScrollView>
       </ShowWrapper>

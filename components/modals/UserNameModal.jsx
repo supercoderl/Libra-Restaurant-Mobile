@@ -53,11 +53,11 @@ const UserNameModal = props => {
           onClose={onClose}
           className="flex flex-col px-5 py-3 bg-white rounded-lg gap-y-5 "
         >
-          <Modal.Header onClose={onClose}>身份信息的提交和编辑</Modal.Header>
+          <Modal.Header onClose={onClose}>Thông tin khách hàng</Modal.Header>
           <Modal.Body>
             <View className="flex flex-col justify-between">
               <TextField
-                label="名字和姓氏"
+                label="Họ và tên"
                 control={control}
                 errors={formErrors.name}
                 name="name"
@@ -65,7 +65,7 @@ const UserNameModal = props => {
 
               <View className="py-3 border-t-2 border-gray-200 lg:pb-0 ">
                 <SubmitModalBtn onPress={handleSubmit(submitHander)} isLoading={isLoading}>
-                  确认
+                  Xác nhận
                 </SubmitModalBtn>
               </View>
             </View>

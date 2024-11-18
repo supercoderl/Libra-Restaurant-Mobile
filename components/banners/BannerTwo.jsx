@@ -11,16 +11,14 @@ export default function BannerTwo(props) {
   if (data.length === 0) return null
 
   return (
-    <FeedSectionContainer title="推荐专题">
+    <FeedSectionContainer title="Sự kiện đang diễn ra">
       <FlashList
         data={data}
         renderItem={({ item, index }) => (
-          <View className="h-[30vw] w-[70vw] mr-4" key={index}>
+          <View className="h-[40vw] w-[90vw] mr-4" key={index}>
             <Image
               key={index}
-              source={{
-                uri: item.image.url,
-              }}
+              source={item.source}
               className="w-full h-full rounded-lg"
             />
           </View>

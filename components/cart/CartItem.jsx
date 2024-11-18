@@ -1,80 +1,67 @@
 import { Link } from 'expo-router'
-import { Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 import CartButtons from './CartButtons'
 import DiscountCartItem from './DiscountCartItem'
 import Icons from '../common/Icons'
 import ResponsiveImage from '../common/ResponsiveImage'
-import SpecialSell from '../product/SpecialSell'
 
 import { formatNumber } from '@/utils'
+import { useAppDispatch } from 'hooks'
+import { removeFromCart } from 'store'
 
 const CartItem = props => {
   //? Props
-  const { item } = props
+  const { item, loading } = props
+
+  //? Assets
+  const dispatch = useAppDispatch();
 
   //? Render(s)
   return (
-    <View className="flex flex-row px-4 py-5 space-x-4">
+    <View className="flex flex-row m-2 p-3 space-x-4 bg-white rounded-md" style={styles.shadow}>
       {/* image & cartButtons */}
       <View className="space-y-4">
         <ResponsiveImage
-          dimensions="w-28 h-28"
-          imageStyles="w-28 h-28"
-          source={item.img.url}
-          alt={item.name}
+          dimensions="w-24 h-24"
+          imageStyles="w-24 h-24"
+          source={item?.picture}
+          alt={item?.title}
         />
-
-        <View className="mx-auto">
-          <SpecialSell discount={item.discount} inStock={item.inStock} />
-        </View>
-
-        <View>
-          <CartButtons item={item} />
-        </View>
       </View>
 
       {/* name */}
       <View className="flex-auto">
-        <Text className="mb-3 text-sm">
-          <Link href={`/products/${item.productID}`}>{item.name}</Link>
-        </Text>
+        <View className="mb-1 flex flex-row items-center justify-between">
+          <Text className="text-sm">
+            <Link href={`/products/${item?.slug}`}>{item?.title}</Link>
+          </Text>
+
+          {item?.quantityInCart === 1 && item?.hasMore &&
+            <Pressable type="button" onPress={() => dispatch(removeFromCart(item?.itemId))}>
+              <Icons.MaterialCommunityIcons name="close" size={16} className="icon text-gray-500" />
+            </Pressable>}
+        </View>
 
         {/* info */}
-        <View className="space-y-3">
-          {item.color && (
-            <View className="flex flex-row items-center gap-x-2">
-              <View
-                className="inline-block w-5 h-5 shadow rounded-xl"
-                style={{ backgroundColor: item.color.hashCode }}
-              />
-              <Text>{item.color.name}</Text>
-            </View>
-          )}
-          {item.size && (
-            <View className="flex flex-row items-center gap-x-2">
-              <Icons.MaterialIcons name="rule" size={20} className="icon" />
-              <Text className="">{item.size.size}</Text>
-            </View>
-          )}
+        <View className="mb-1">
           <View className="flex flex-row items-center gap-x-2">
-            <Icons.Ionicons name="shield-checkmark-outline" size={20} className="icon" />
-            <Text className="font-light">正品保证和发货保证</Text>
+            <Text numberOfLines={2} className="font-light text-gray-400 truncate">{item?.recipe}</Text>
           </View>
-          <View className="flex flex-row items-center gap-x-2">
-            <Icons.MaterialIcons name="save" size={20} className="icon text-sky-400" />
-            <Text className="font-light">仓库有售</Text>
-          </View>
+        </View>
+
+        {/* action */}
+        <View className="flex-row items-center mt-auto justify-between ">
           {item.discount > 0 ? (
             <View>
-              <DiscountCartItem discount={item.discount} price={item.price} />
+              <DiscountCartItem discount={item?.discount || 0} price={item?.price} />
             </View>
           ) : (
-            <View className="flex items-center gap-x-2">
-              <Text className="text-sm text-gray-700">{formatNumber(item.price)}</Text>
-              <Text className="">¥</Text>
+            <View className="flex flex-row items-center gap-x-2">
+              <Text className="text-[15px] font-bold text-red-500">{formatNumber(item?.price)} ₫</Text>
             </View>
           )}
+          <CartButtons item={item} loading={loading} />
         </View>
       </View>
     </View>
@@ -82,3 +69,16 @@ const CartItem = props => {
 }
 
 export default CartItem
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 3
+  }
+})

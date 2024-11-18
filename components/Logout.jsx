@@ -5,8 +5,12 @@ import Icons from './common/Icons'
 
 import { useAppDispatch } from '@/hooks'
 import { userLogout } from '@/store'
+import { useTranslation } from 'react-i18next'
 
 export default function Logout() {
+  //? States
+  const { t } = useTranslation();
+
   //? Assets
   const dispatch = useAppDispatch()
 
@@ -15,7 +19,7 @@ export default function Logout() {
     dispatch(userLogout())
     Toast.show({
       type: 'success',
-      text2: '已退出登录',
+      text2: t('logout-success'),
     })
   }
 
@@ -25,8 +29,8 @@ export default function Logout() {
       className="flex flex-row justify-between items-center transition-colors py-4 text-xs text-gray-700 w-full"
       onPress={handleLogout}
     >
-      <Text className="text-gray-700">退出</Text>
-      <Icons.MaterialIcons name="logout" size={24} className="text-gray-700" />
+      <Text className="text-red-500">{t('logout')}</Text>
+      <Icons.MaterialIcons name="logout" size={24} className="text-red-500" />
     </TouchableOpacity>
   )
 }

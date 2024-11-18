@@ -9,26 +9,26 @@ const InitialStore = props => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (product.colors.length > 0) {
-      dispatch(setTempColor(product?.colors[0]))
-      dispatch(setTempSize(null))
-    } else if (product.sizes.length > 0) {
-      dispatch(setTempSize(product?.sizes[0]))
-      dispatch(setTempColor(null))
-    } else {
-      dispatch(setTempColor(null))
-      dispatch(setTempSize(null))
-    }
+    // if (product.colors.length > 0) {
+    //   dispatch(setTempColor(product?.colors[0]))
+    //   dispatch(setTempSize(null))
+    // } else if (product.sizes.length > 0) {
+    //   dispatch(setTempSize(product?.sizes[0]))
+    //   dispatch(setTempColor(null))
+    // } else {
+    //   dispatch(setTempColor(null))
+    //   dispatch(setTempSize(null))
+    // }
   }, [])
   useEffect(() => {
     dispatch(
       addToLastSeen({
-        productID: product._id,
-        image: product.images[0],
-        title: product.title,
+        productID: product?.itemId,
+        image: product?.picture,
+        title: product?.title,
       })
     )
-  }, [product._id])
+  }, [product?.itemId])
   return null
 }
 

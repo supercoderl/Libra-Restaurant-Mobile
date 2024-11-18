@@ -11,7 +11,7 @@ const SmilarProductsSlider = props => {
   return (
     <View className="px-3 py-4 overflow-hidden">
       <Text className="mb-3 w-24">{smilarProducts.title}</Text>
-      <FlashList
+      {/* <FlashList
         data={smilarProducts?.products || []}
         renderItem={({ item, index }) => (
           <Pressable key={item._id} className="w-[80vw] px-2">
@@ -20,7 +20,7 @@ const SmilarProductsSlider = props => {
         )}
         horizontal
         estimatedItemSize={200}
-      />
+      /> */}
     </View>
   )
 }

@@ -19,8 +19,8 @@ const SelectColor = props => {
   return (
     <View className="">
       <View className="flex flex-row justify-between p-4">
-        <Text className="text-sm text-gray-700">颜色: {tempColor?.name}</Text>
-        <Text className="text-sm">{colors.length} 种颜色</Text>
+        <Text className="text-sm text-gray-700">Màu: {tempColor?.name}</Text>
+        <Text className="text-sm">{colors.length} màu</Text>
       </View>
       <View className="flex flex-row flex-wrap gap-3 px-5 my-3">
         {colors.map(item => (

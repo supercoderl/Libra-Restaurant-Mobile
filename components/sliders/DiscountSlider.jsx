@@ -1,42 +1,28 @@
 import { FlashList } from '@shopify/flash-list'
 import { Link, router } from 'expo-router'
-import { View, Image, Pressable, TouchableOpacity } from 'react-native'
+import { View, Image, Pressable, TouchableOpacity, Text, ImageBackground, StyleSheet, FlatList } from 'react-native'
 
 import FeedSectionContainer from '../common/FeedSectionContainer'
 import Skeleton from '../common/Skeleton'
 import DiscountProduct from '../product/DiscountProduct'
 import ProductPrice from '../product/ProductPrice'
-
-import { useGetProductsQuery } from '@/services'
+import { useTranslation } from 'react-i18next'
 
 export default function DiscountSlider(props) {
   //? Props
-  const { currentCategory } = props
-
-  //? Get Products Query
-  const { products, isLoading } = useGetProductsQuery(
-    {
-      sort: 6,
-      category: currentCategory?.slug,
-      page_size: 15,
-      discount: true,
-    },
-    {
-      selectFromResult: ({ data, isLoading }) => ({
-        products: data?.data?.products || [],
-        isLoading,
-      }),
-    }
-  )
+  const { products, isLoading } = props
 
   //? handlers
   const handleJumptoMore = () => {
     router.push('/category')
   }
 
+  //? Assets
+  const { t } = useTranslation()
+
   //? Render(s)
   return (
-    <FeedSectionContainer title="折扣商品" showMore onJumptoMore={handleJumptoMore}>
+    <FeedSectionContainer title={t('discount-foods')} showMore onJumptoMore={handleJumptoMore}>
       {isLoading ? (
         <FlashList
           data={Array(10).fill('_')}
@@ -66,31 +52,31 @@ export default function DiscountSlider(props) {
           estimatedItemSize={200}
         />
       ) : !products.length ? null : (
-        <FlashList
+        <FlatList
           data={products}
+          keyExtractor={(_, index) => index.toString()}
+          contentContainerStyle={{ gap: 10 }}
+          showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
             <Link
               href={{
-                pathname: `/products/${item._id}`,
+                pathname: `/products/${item.slug}`,
               }}
-              key={item._id}
+              key={item.itemId}
               asChild
             >
-              <TouchableOpacity className="w-fit h-fit bg-white mx-0.5 py-3">
-                <Image
+              <TouchableOpacity className="w-40 h-28 overflow-hidden relative rounded-lg">
+                <ImageBackground
                   source={{
-                    uri: item?.images[0]?.url,
+                    uri: item?.picture,
                   }}
-                  className="w-32 h-32"
-                />
-                <View className="flex flex-row px-2 mt-1.5 justify-evenly items-start gap-x-2 ">
-                  <DiscountProduct discount={item.discount} />
-                  <ProductPrice
-                    inStock={item?.inStock}
-                    discount={item?.discount}
-                    price={item?.price}
-                  />
-                </View>
+                  className="flex-1"
+                  resizeMode="cover"
+                >
+                  <View className="flex-1 justify-end px-1.5 pb-1" style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}>
+                    <Text numberOfLines={1} className="text-white text-[16px]">{item?.title}</Text>
+                  </View>
+                </ImageBackground>
               </TouchableOpacity>
             </Link>
           )}

@@ -35,7 +35,7 @@ const SubCategories = props => {
                     className="w-14 h-14"
                     imageStyles="w-full h-full"
                     source={item.image}
-                    alt={item.name}
+                    alt={item.name} 
                   />
                   <Text className="inline-block text-xs text-neutral-600 mt-2 text-center">
                     {item.name}

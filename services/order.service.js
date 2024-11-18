@@ -3,10 +3,10 @@ import apiSlice from './api'
 export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getOrdersList: builder.query({
-      query: (page_size, page) => ({
+      query: (pageSize, page, phone) => ({
         url: `/api/order/list`,
         method: 'GET',
-        params: { page_size, page },
+        params: { pageSize, page, phone },
       }),
 
       providesTags: (result, error, arg) =>
@@ -22,9 +22,15 @@ export const orderApiSlice = apiSlice.injectEndpoints({
     }),
 
     getOrders: builder.query({
-      query: ({ page = 1, pageSize = 10 }) => ({
-        url: `/api/order?page=${page}&page_size=${pageSize}`,
+      query: ({ page, pageSize, phone, includeDeleted }) => ({
+        url: `Order`,
         method: 'GET',
+        params: {
+          page: page || 1,
+          pageSize: pageSize || 10,
+          phone,
+          includeDeleted: includeDeleted || false,
+        },
       }),
       serializeQueryArgs: ({ queryArgs, ...rest }) => {
         const newQueryArgs = { ...queryArgs }
@@ -33,44 +39,48 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         }
         return newQueryArgs
       },
-      // Always merge incoming data to the cache entry
-      merge: (currentCache, newItems) => {
-        if (currentCache) {
-          newItems.data.orders.unshift(...currentCache.data.orders)
-          return {
-            ...currentCache,
-            ...newItems,
-          }
+    }),
+
+    getOrdersByPhone: builder.query({
+      query: ({ page, pageSize, phone, includeDeleted }) => ({
+        url: `Order/customer`,
+        method: 'GET',
+        params: {
+          page: page || 1,
+          pageSize: pageSize || 10,
+          phone,
+          includeDeleted: includeDeleted || false,
+        },
+      }),
+      serializeQueryArgs: ({ queryArgs, ...rest }) => {
+        const newQueryArgs = { ...queryArgs }
+        if (newQueryArgs.page) {
+          delete newQueryArgs.page
         }
-        return newItems
-      },
-      // Refetch when the page arg changes
-      forceRefetch({ currentArg, previousArg }) {
-        if (currentArg?.page === 1) return false
-        return currentArg?.page !== previousArg?.page
+        return newQueryArgs
       },
     }),
 
     getSingleOrder: builder.query({
       query: ({ id }) => ({
-        url: `/api/order/${id}`,
+        url: `Order/${id}`,
         method: 'GET',
       }),
-      providesTags: (result, error, arg) => [{ type: 'Order', id: arg.id }],
+      providesTags: (result, error, arg) => [{ type: 'Order', id: arg.orderId }],
     }),
 
     updateOrder: builder.mutation({
-      query: ({ id, body }) => ({
-        url: `/api/order/${id}`,
-        method: 'PATCH',
+      query: ({ body }) => ({
+        url: `Order`,
+        method: 'PUT',
         body,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Order', id: arg.id }],
+      invalidatesTags: (result, error, arg) => [{ type: 'Order', id: arg }],
     }),
 
     createOrder: builder.mutation({
       query: ({ body }) => ({
-        url: '/api/order',
+        url: 'Order',
         method: 'POST',
         body,
       }),
@@ -82,7 +92,10 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetOrdersQuery,
   useGetSingleOrderQuery,
+  useLazyGetSingleOrderQuery,
   useUpdateOrderMutation,
   useCreateOrderMutation,
   useGetOrdersListQuery,
+  useLazyGetOrdersQuery,
+  useLazyGetOrdersByPhoneQuery,
 } = orderApiSlice

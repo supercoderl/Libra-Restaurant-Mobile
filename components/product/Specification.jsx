@@ -47,9 +47,9 @@ const Specification = props => {
               onPress={showSpecHandlers.toggle}
             >
               {isShowSpec ? (
-                <Text className="text-sm text-sky-400">收起</Text>
+                <Text className="text-sm text-sky-400">Đóng</Text>
               ) : (
-                <Text className="text-sm text-sky-400">查看更多</Text>
+                <Text className="text-sm text-sky-400">Xem thêm</Text>
               )}
               {!isShowSpec && (
                 <Icons.MaterialIcons

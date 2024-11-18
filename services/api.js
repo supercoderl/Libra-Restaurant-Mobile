@@ -3,14 +3,12 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.EXPO_PUBLIC_BASE_URL,
+    baseUrl: process.env.EXPO_PUBLIC_API_URL,
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().user.token
-      if (token) headers.set('authorization', token)
       return headers
     },
   }),
-  tagTypes: ['User', 'Review', 'Details', 'Order', 'Product', 'Category', 'Slider', 'Banner'],
+  tagTypes: ['Category', 'Feed', 'Item', 'PaymentMethod', 'Reservation', 'Order', 'Payment'],
   endpoints: builder => ({}),
 })
 

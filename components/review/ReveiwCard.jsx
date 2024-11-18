@@ -70,7 +70,7 @@ const ReveiwCard = props => {
                         : 'text-red-500'
                   }`}
                 >
-                  {status === 1 ? '等待确认' : status === 2 ? '已经确认' : '不见了'}
+                  {status === 1 ? 'Đang chờ xác nhận' : status === 2 ? 'Đã được xác nhận' : 'Bị từ chối'}
                 </Text>
               </View>
               <Icons.Feather name="more-vertical" size={18} />

@@ -1,16 +1,17 @@
 {
   "expo": {
-    "name": "c-shopping-rn",
-    "slug": "c-shopping-rn",
+    "name": "libra-restaurant",
+    "slug": "libra-restaurant",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "newArchEnabled": true,
     "experiments": {
       "tsconfigPaths": true
     },
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,13 +22,33 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "permissions": ["android.permission.INTERNET"]
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": "shoppig-rn-scheme",
-    "plugins": ["expo-router"]
+    "jsEngine": "hermes",
+    "scheme": "libra-restaurant-scheme",
+    "plugins": [
+      "expo-router",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Cho phép $(PRODUCT_NAME) truy cập vào máy ảnh của bạn",
+          "microphonePermission": "Cho phép $(PRODUCT_NAME) truy cập vào micro của bạn",
+          "recordAudioAndroid": true
+        }
+      ]
+    ]
   }
 }

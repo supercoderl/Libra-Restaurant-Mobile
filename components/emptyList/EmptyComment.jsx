@@ -1,5 +1,9 @@
+import { useTranslation } from 'react-i18next'
 import { Text } from 'react-native'
 
 export default function EmptyComment() {
-  return <Text className="mt-6 text-red-800">暂时还没有评论，快来成为第一位评论者吧 </Text>
+  //? Assets
+  const { t } = useTranslation();
+
+  return <Text className="mt-6 text-red-800">{t('empty-comment')}</Text>
 }

@@ -1,7 +1,11 @@
 import { AntDesign } from '@expo/vector-icons'
+import { useTranslation } from 'react-i18next'
 import { Text, TouchableOpacity, View } from 'react-native'
 
 const FeedSectionContainer = props => {
+  //? Assets
+  const { t } = useTranslation();
+
   //? Props
   const { title, showMore = false, onJumptoMore, children, style = {} } = props
 
@@ -20,7 +24,7 @@ const FeedSectionContainer = props => {
             onPress={handleJumpMore}
             className="flex flex-row items-center space-x-1"
           >
-            <Text className="text-neutral-400 text-base">更多</Text>
+            <Text className="text-neutral-400 text-base">{t('all')}</Text>
             <AntDesign name="arrowright" size={14} color="rgb(163 163 163)" />
           </TouchableOpacity>
         )}

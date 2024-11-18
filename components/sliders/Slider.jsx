@@ -10,14 +10,20 @@ export default function Slider(props) {
 
   return (
     <View className="mt-3 rounded-lg overflow-hidden">
-      <Swiper style={styles.wrapper} showsPagination activeDotColor="#1D4ED8" dotColor="#E5E7EB">
+      <Swiper
+        style={styles.wrapper}
+        showsPagination={false}
+        activeDotColor="#FF6600"
+        dotColor="#E5E7EB"
+        autoplay
+      >
         {data
-          .filter(item => item.isPublic)
+          .filter(item => item)
           .map((item, index) => (
             <Image
               key={index}
               source={{
-                uri: item.image.url,
+                uri: process.env.EXPO_PUBLIC_CLOUDINARY_URL + item,
               }}
               className="w-full h-full"
             />

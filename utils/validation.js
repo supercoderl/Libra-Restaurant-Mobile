@@ -63,12 +63,26 @@ export const addressSchema = Yup.object().shape({
 })
 
 export const nameSchema = Yup.object().shape({
-  name: Yup.string().required('必须登记姓名').min(3, '名字必须超过 3 个字符'),
+  name: Yup.string().required('Họ tên là bắt buộc').min(3, 'Ít nhất 3 ký tự'),
 })
 
 export const mobileSchema = Yup.object().shape({
   mobile: Yup.string()
-    .required('手机号码必须注册')
-    .min(11, '手机号码必须为 11 位数字')
-    .max(11, '手机号码必须为 11 位数字'),
+    .required('Số điện thoại là bắt buộc')
+    .min(11, 'Số điện thoại phải ít nhất 11 chữ số')
+    .max(11, 'Số điện thoại không được vượt quá 11 chữ số'),
 })
+
+export const getCombinedSchema = shouldShowName => {
+  return Yup.object().shape({
+    name: Yup.lazy(() =>
+      shouldShowName
+        ? Yup.string().required('Họ tên là bắt buộc').min(3, 'Ít nhất 3 ký tự')
+        : Yup.mixed().notRequired()
+    ),
+    mobile: Yup.string()
+      .required('Số điện thoại là bắt buộc')
+      .min(11, 'Số điện thoại phải ít nhất 11 chữ số')
+      .max(11, 'Số điện thoại không được vượt quá 11 chữ số'),
+  })
+}

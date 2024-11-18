@@ -4,24 +4,29 @@ import React from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
 
 import FeedSectionContainer from './common/FeedSectionContainer'
+import { useTranslation } from 'react-i18next'
 
 export default function Categories(props) {
   //? Props
-  const { childCategories, color, name } = props
+  const { categories } = props
+
+  //? Assets
+  const { t } = useTranslation()
 
   //? Re-Renders
-  if (childCategories.categories.length > 0 && color && name) {
+  if (categories.length > 0) {
     return (
-      <FeedSectionContainer title="分类">
+      <FeedSectionContainer title={t('category')}>
         <FlashList
-          data={childCategories.categories}
+          showsHorizontalScrollIndicator={false}
+          data={categories}
           horizontal
           renderItem={({ item, index }) => (
             <Link
-              key={item._id}
+              key={item.categoryId}
               href={{
                 pathname: '/products',
-                params: { category: item.slug },
+                params: { categoryId: item?.categoryId, title: item?.name },
               }}
               asChild
             >
@@ -30,7 +35,7 @@ export default function Categories(props) {
                   <Image
                     key={index}
                     source={{
-                      uri: item.image,
+                      uri: item.picture,
                     }}
                     className="w-full h-full"
                   />

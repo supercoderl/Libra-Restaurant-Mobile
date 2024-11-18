@@ -19,7 +19,7 @@ const SelectSize = props => {
     <View className="">
       <View className="flex flex-row justify-between p-4">
         <Text className="text-sm text-gray-700">尺寸: {tempSize?.size}</Text>
-        <Text className="text-sm">{formatNumber(sizes.length)} 种尺寸</Text>
+        <Text className="text-sm">{formatNumber(sizes.length)} kích cỡ</Text>
       </View>
       <View className="flex flex-row flex-wrap gap-y-3 space-x-3 px-5 my-3">
         {sizes.map(item => (

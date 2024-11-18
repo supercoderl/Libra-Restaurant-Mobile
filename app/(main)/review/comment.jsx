@@ -10,10 +10,12 @@ import { View, Text, ScrollView, Pressable, TextInput } from 'react-native'
 import { HandleResponse, Icons, SubmitModalBtn, TextField } from '@/components'
 import { useCreateReviewMutation } from '@/services'
 import { ratingStatus, reviewSchema } from '@/utils'
+import { useTranslation } from 'react-i18next'
 
 export default function ReviewCommentScreen() {
   //? Assets
   const { prdouctID, productTitle, numReviews } = useLocalSearchParams()
+  const { t } = useTranslation();
 
   //? Refs
   const [positiveValue, setPositiveValue] = useState('')
@@ -86,7 +88,7 @@ export default function ReviewCommentScreen() {
     <>
       <Stack.Screen
         options={{
-          title: `填写评价，${productTitle}`,
+          title: `${t('comment')}, ${productTitle}`,
           headerBackTitleVisible: false,
         }}
       />
@@ -102,141 +104,94 @@ export default function ReviewCommentScreen() {
             setRating(1)
             router.back()
           }}
-          onError={() => {}}
+          onError={() => { }}
         />
       )}
       <ScrollView className="bg-white">
         <View className="bg-white">
           <View className="flex flex-col justify-between flex-1 p-4 gap-y-5">
-            {/* rating */}
-            <View>
-              <View className="my-2 flex flex-row justify-center text-center">
-                <Text className="text-sm text-black">评分!:‌</Text>
-                <Text className="px-1 text-sm text-sky-500">{ratingStatus[rating]}</Text>
-              </View>
-              <Slider
-                step={1}
-                maximumValue={5}
-                minimumValue={1}
-                style={{ width: '100%' }}
-                value={rating}
-                onValueChange={value => {
-                  setRating(value)
-                }}
-                disabled={false}
-                maximumTrackTintColor="#CCCCCC"
-              />
-              <View className="flex flex-row justify-between">
-                {Array(5)
-                  .fill('_')
-                  .map((_, i) => (
-                    <View key={i} className="h-1 w-1 rounded-full bg-gray-300 inline-block" />
-                  ))}
-              </View>
-            </View>
-
             {/* title */}
-            <View>
-              <TextField
-                label="评价标题"
-                control={control}
-                errors={formErrors.title}
-                name="title"
-              />
+            <View
+              className="w-full h-36 rounded-md bg-white p-5 items-center"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+              }}
+            >
+              <Text className="text-lg">{t('your-feel')}</Text>
             </View>
 
             {/* positivePoints */}
-            <View className="space-y-3">
-              <View className="space-y-3">
-                <Text className="text-xs text-gray-700">优点</Text>
-                <View className="flex flex-row items-center input w-full px-3 py-2.5 transition-colors border border-gray-200 rounded-md outline-none bg-zinc-50/30 focus:border-blue-600 leading-none">
-                  <TextInput
-                    className=" flex-auto"
-                    type="text"
-                    name="positivePoints"
-                    id="positivePoints"
-                    value={positiveValue}
-                    onChangeText={value => {
-                      setPositiveValue(value)
-                    }}
-                  />
-                  <Pressable onPress={handleAddPositivePoint}>
-                    <Icons.AntDesign size={16} name="plus" className="icon" />
+            <View className="p-4">
+              <View className="flex flex-row items-center justify-between border-b-[1px] border-gray-300 pb-2">
+                <Text>{t('staff-attitude')}</Text>
+                <View className="flex flex-row gap-x-4 items-center">
+                  <Pressable className="active:scale-90">
+                    <Icons.AntDesign name="like2" size={20} />
+                  </Pressable>
+                  <Pressable className="active:scale-90">
+                    <Icons.AntDesign name="dislike2" size={20} />
                   </Pressable>
                 </View>
               </View>
-              {positivePointsFields.length > 0 && (
-                <View className="space-y-3">
-                  {positivePointsFields.map((field, index) => (
-                    <View key={field.id} className="flex flex-row items-center px-3 gap-x-4">
-                      <Icons.AntDesign size={16} name="plus" className="text-green-500 icon" />
-                      <Text className="flex-auto">{field.title}</Text>
-                      <Pressable>
-                        <Icons.AntDesign
-                          size={16}
-                          name="delete"
-                          className="icon text-gray"
-                          onPress={() => removePositivePoint(index)}
-                        />
-                      </Pressable>
-                    </View>
-                  ))}
-                </View>
-              )}
-            </View>
 
-            {/* negativePoints */}
-            <View className="space-y-3">
-              <View className="space-y-3">
-                <Text className="text-xs text-gray-700">缺点</Text>
-                <View className="flex flex-row items-center input w-full px-3 py-2.5 transition-colors border border-gray-200 rounded-md outline-none bg-zinc-50/30 focus:border-blue-600 leading-none">
-                  <TextInput
-                    className=" flex-auto"
-                    type="text"
-                    name="negativePoints"
-                    id="negativePoints"
-                    value={negativeValue}
-                    onChangeText={value => {
-                      setNegativeValue(value)
-                    }}
-                  />
-                  <Pressable onPress={handleAddNegativePoint}>
-                    <Icons.AntDesign size={16} name="plus" className="icon" />
+              <View className="flex flex-row items-center justify-between border-b-[1px] border-gray-300 pb-2 mt-6">
+                <Text>{t('restaurant-service')}</Text>
+                <View className="flex flex-row gap-x-4 items-center">
+                  <Pressable className="active:scale-90">
+                    <Icons.AntDesign name="like2" size={20} />
+                  </Pressable>
+                  <Pressable className="active:scale-90">
+                    <Icons.AntDesign name="dislike2" size={20} />
                   </Pressable>
                 </View>
               </View>
-              {negativePointsFields.length > 0 && (
-                <View className="space-y-3">
-                  {negativePointsFields.map((field, index) => (
-                    <View key={field.id} className="flex flex-row items-center px-3 gap-x-4">
-                      <Icons.AntDesign size={16} name="minus" className="text-red-500 icon" />
-                      <Text className="flex-auto">{field.title}</Text>
-                      <Pressable>
-                        <Icons.AntDesign
-                          size={16}
-                          name="delete"
-                          className="icon text-gray"
-                          onPress={() => removeNegativePoint(index)}
-                        />
-                      </Pressable>
-                    </View>
-                  ))}
+
+              <View className="flex flex-row items-center justify-between border-b-[1px] border-gray-300 pb-2 mt-6">
+                <Text>{t('food-quality')}</Text>
+                <View className="flex flex-row gap-x-4 items-center">
+                  <Pressable className="active:scale-90">
+                    <Icons.AntDesign name="like2" size={20} />
+                  </Pressable>
+                  <Pressable className="active:scale-90">
+                    <Icons.AntDesign name="dislike2" size={20} />
+                  </Pressable>
                 </View>
-              )}
+              </View>
+
+              <View className="flex flex-row items-center justify-between border-b-[1px] border-gray-300 pb-2 mt-6">
+                <Text>{t('food-delivery')}</Text>
+                <View className="flex flex-row gap-x-4 items-center">
+                  <Pressable className="active:scale-90">
+                    <Icons.AntDesign name="like2" size={20} />
+                  </Pressable>
+                  <Pressable className="active:scale-90">
+                    <Icons.AntDesign name="dislike2" size={20} />
+                  </Pressable>
+                </View>
+              </View>
             </View>
 
             {/* comment */}
             <View>
               <TextField
-                label="评价文字"
+                label={t('write-comment')}
                 control={control}
                 errors={formErrors.comment}
                 name="comment"
+                multiline
+                inputStyle={{ marginTop: 5, height: 120, textAlignVertical: "top" }}
               />
             </View>
-            <View className="py-3">
+            <View className="py-1">
               <SubmitModalBtn onPress={handleSubmit(submitHander)} isLoading={isLoading}>
-                提交评价
+                {t('send-comment')}
               </SubmitModalBtn>
             </View>
           </View>

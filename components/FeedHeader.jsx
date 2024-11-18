@@ -8,13 +8,16 @@ import Logo from './svgs/logo.svg'
 
 import { useAppSelector } from '@/hooks'
 import { formatNumber } from '@/utils'
+import { _get } from 'utils/storage'
+import { CurvedNumberIcon } from './icons/CurvedNumber'
 
 export default function FeedHeader() {
   //? Assets
   const insets = useSafeAreaInsets()
 
   //? Store
-  const { totalItems } = useAppSelector(state => state.cart)
+  const { totalItems } = useAppSelector(state => state.cart);
+  const { tableNumber } = useAppSelector(state => state.reservation);
 
   //? Handlers
   const handleIconClick = path => {
@@ -25,15 +28,25 @@ export default function FeedHeader() {
   return (
     <View style={{ paddingTop: insets.top }} className="p-3 bg-white shadow-sm">
       <View className="flex flex-row items-center justify-between">
-        <Logo width={120} height={40} />
+        <Logo width={200} height={50} />
         <View className="flex flex-row space-x-3 pr-1">
-          <TouchableOpacity
-            onPress={() => {
-              handleIconClick('/notice')
-            }}
-          >
-            <Icons.Ionicons name="notifications-outline" size={24} color="black" />
-          </TouchableOpacity>
+          {
+            tableNumber && tableNumber !== -1 ?
+              <TouchableOpacity
+                onPress={() => handleIconClick('/scan')}
+                className="flex items-center flex-row"
+              >
+                <CurvedNumberIcon number={tableNumber} size={24} />
+              </TouchableOpacity>
+              :
+              <TouchableOpacity
+                onPress={() => {
+                  handleIconClick('/scan')
+                }}
+              >
+                <Icons.MaterialCommunityIcons name="qrcode-scan" size={24} color="black" />
+              </TouchableOpacity>
+          }
 
           <Pressable
             onPress={() => {
@@ -41,10 +54,10 @@ export default function FeedHeader() {
             }}
             className="relative"
           >
-            <Icons.AntDesign name="shoppingcart" size={24} color="#1F2937" />
+            <Icons.Feather name="shopping-bag" size={24} color="#1F2937" />
             {formatNumber(totalItems) && (
-              <View className="absolute outline outline-2 -top-3 -right-3 bg-red-500 rounded-md w-5 h-5 p-0.5">
-                <Text className=" text-center text-xs text-white">{formatNumber(totalItems)}</Text>
+              <View className="absolute outline outline-2 -top-2 -right-2 bg-red-500 rounded-sm w-4 h-4 p-0.5">
+                <Text className=" text-center text-[8px] text-white">{formatNumber(totalItems)}</Text>
               </View>
             )}
           </Pressable>

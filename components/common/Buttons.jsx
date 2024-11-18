@@ -1,20 +1,34 @@
-import { Text, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, Text, TouchableOpacity } from 'react-native'
 
 import Loading from '../loading/Loading'
 
 export const Button = props => {
   //? Props
-  const { isLoading = false, children, className = '', isRounded = false, ...restPropps } = props
+  const {
+    isLoading = false,
+    disabled = false,
+    children,
+    className = '',
+    isRounded = false,
+    isOutlined = false,
+    ...restPropps
+  } = props
 
   //? Render
   return (
     <TouchableOpacity
-      disabled={isLoading}
-      className={`py-3 px-8 flex items-center outline-none rounded-md active:scale-[.98] bg-red-500 button ${isRounded ? 'rounded-3xl' : ''} ${className}
+      disabled={disabled}
+      className={`
+        px-8 flex items-center rounded-md active:scale-[.98] 
+        ${isOutlined ? 'py-2.5 border-2 border-red-500 box-border' : `py-3 ${disabled ? 'bg-gray-300' : 'bg-red-500'}`} button ${isRounded ? 'rounded-3xl' : ''} ${className}
     `}
       {...restPropps}
     >
-      {isLoading ? <Loading /> : <Text className="text-white">{children}</Text>}
+      {isLoading ? (
+        <ActivityIndicator size={20} color={isOutlined ? 'black' : 'white'} />
+      ) : (
+        <Text className={isOutlined ? 'text-red-500' : 'text-white'}>{children}</Text>
+      )}
     </TouchableOpacity>
   )
 }

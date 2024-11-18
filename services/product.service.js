@@ -3,11 +3,11 @@ import apiSlice from './api'
 export const productApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getProducts: builder.query({
-      query: ({ category, page_size, page, sort, search, inStock, discount, price }) => {
+      query: ({ categoryId, includeDeleted }) => {
         return {
-          url: `/api/products`,
+          url: `Item`,
           method: 'GET',
-          params: { category, page_size, page, sort, search, inStock, discount, price },
+          params: { categoryId, includeDeleted },
         }
       },
       serializeQueryArgs: ({ queryArgs, ...rest }) => {
@@ -36,18 +36,18 @@ export const productApiSlice = apiSlice.injectEndpoints({
       providesTags: result =>
         result
           ? [
-              ...result.data.products.map(({ _id }) => ({
-                type: 'Product',
-                id: _id,
+              ...result?.data?.items.map((_, index) => ({
+                type: 'Item',
+                id: index,
               })),
-              'Product',
+              'Item',
             ]
-          : ['Product'],
+          : ['Item'],
     }),
 
     getSingleProductDetail: builder.query({
-      query: ({ id }) => ({
-        url: `/api/products/itemDetail?id=${id}`,
+      query: ({ id, slug }) => ({
+        url: id ? `Item/${id}` : `Item/slug/${slug}`,
         method: 'GET',
       }),
     }),

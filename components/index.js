@@ -4,7 +4,6 @@ export { default as Categories } from './Categories'
 export { default as FeedHeader } from './FeedHeader'
 export { default as Logout } from './Logout'
 export { default as Sort } from './Sort'
-export { default as FreeShipping } from './FreeShipping'
 
 //* COMMON COMPONENTS
 export { default as Icons } from './common/Icons'
@@ -46,7 +45,6 @@ export { default as SmilarProductsSlider } from './sliders/SmilarProductsSlider'
 export { default as OrderSkeleton } from './skeleton/OrderSkeleton'
 
 //* BANNER COMPONENTS
-export { default as BannerOne } from './banners/BannerOne'
 export { default as BannerTwo } from './banners/BannerTwo'
 
 //* PRODUCT COMPONENTS
