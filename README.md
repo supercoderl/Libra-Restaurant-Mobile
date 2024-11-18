@@ -127,7 +127,7 @@ To run the Libra Restaurant React Native app locally, follow these steps:
 
 Follow my zalo if you wanna contact to me!
 
-| Zalo |    |                                                                     ------------------------------------------------------------------------------------------------------------------------------------------------------| <img alt="zalo-qr" src="https://res.cloudinary.com/dcystvroz/image/upload/v1731939941/My%20pics/eyasdc4eum5zz1mri47t.jpg" width="150"> |
+<img alt="zalo-qr" src="https://res.cloudinary.com/dcystvroz/image/upload/v1731939941/My%20pics/eyasdc4eum5zz1mri47t.jpg" width="150">
 
 ## Contributing
 
